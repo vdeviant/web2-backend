@@ -146,9 +146,9 @@ $resultLista = pg_query($conn, $queryLista);
     }
 
       .sucesso {
-      background: #d1e7dd;
-      color: #0f5132;
-      border: 1px solid #badbcc;
+      background: #DCBBFC;
+      color: #830BF4;
+      border: 1px solid #250344;
     }
 
     .erro {
