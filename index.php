@@ -145,7 +145,7 @@ $resultLista = pg_query($conn, $queryLista);
       font-weight: bold;
     }
 
-    .sucesso {
+      .sucesso {
       background: #d1e7dd;
       color: #0f5132;
       border: 1px solid #badbcc;
@@ -165,3 +165,94 @@ $resultLista = pg_query($conn, $queryLista);
 
     table {
       width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    table, th, td {
+      border: 1px solid #e0e0e0;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f8f9fa;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .sem-registros {
+      margin-top: 15px;
+      color: #666;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cadastro de Usuário</h1>
+    <p>Preencha os dados abaixo.</p>
+
+    <form method="POST" action="">
+      <div class="form-grid">
+        
+        <div class="form-group">
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" name="nome" required value="<?php echo htmlspecialchars($nome); ?>">
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($email); ?>">
+        </div>
+
+        <div class="form-group">
+          <label for="telefone">Telefone:</label>
+          <input type="text" id="telefone" name="telefone" required value="<?php echo htmlspecialchars($telefone); ?>">
+        </div>
+
+        <div class="btn-container">
+          <button type="submit">Cadastrar</button>
+        </div>
+
+      </div>
+    </form>
+
+    <?php if ($mensagem !== ""): ?>
+      <div class="mensagem <?php echo $tipoMensagem; ?>">
+        <?php echo htmlspecialchars($mensagem); ?>
+      </div>
+    <?php endif; ?>
+
+    <h2>Usuários cadastrados</h2>
+
+    <?php if ($resultLista && pg_num_rows($resultLista) > 0): ?>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php while ($usuario = pg_fetch_assoc($resultLista)): ?>
+            <tr>
+              <td><?php echo htmlspecialchars($usuario["id"]); ?></td>
+              <td><?php echo htmlspecialchars($usuario["nome"]); ?></td>
+              <td><?php echo htmlspecialchars($usuario["email"]); ?></td>
+              <td><?php echo htmlspecialchars($usuario["telefone"]); ?></td>
+            </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
+    <?php else: ?>
+      <p class="sem-registros">Nenhum usuário cadastrado.</p>
+    <?php endif; ?>
+  </div>
+</body>
+</html>
